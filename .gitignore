@@ -1,5 +1,5 @@
 # Ignore everything
-*
+/*
 
 # Except the following ...
 !.gitignore
@@ -7,4 +7,3 @@
 !"Design document.pdf"
 !src/
 !doc/
-
