@@ -14,18 +14,18 @@ import java.util.Set;
  *
  * <p>
  * Note that although this class specifies the maximum number of friends that
- * each animal can gain and loose per simulation round, the actual number of
+ * each animal can gain and lose per simulation round, the actual number of
  * gained/lost friends for some animals can be more than those maximum values.
  * To explain why this is so consider how the ZooKeeper class might deal with
  * the following scenario. Imagine that the zoo consists of three animals (a
  * dog, a chicken, and a parrot) and that these three are all friends with each
  * other. the ZooKeeper class will take each of these three animals in turn
- * applying the maximum values to them (imagine that the maximum loosable
+ * applying the maximum values to them (imagine that the maximum losable
  * friendships is 1). So if it takes the dog first, it might randomly make it
- * loose its friendship with the parrot, then when it comes to the chicken it
- * might also make it loose its friendship with the parrot. This means that the
+ * lose its friendship with the parrot, then when it comes to the chicken it
+ * might also make it lose its friendship with the parrot. This means that the
  * parrot might be left loosing two freinds even if the maximum number of
- * loosable friends is 1.
+ * losable friends is 1.
  *
  *
  * @see com.zoolife.model.Zoo
@@ -46,8 +46,8 @@ public class ZooKeeper {
 	 * The constructor with no seed
 	 *
 	 * @param maxLosableFriends
-	 *            The maximum number of friends that each animal can loose (Note
-	 *            that animals can loose more than this number. See the note in
+	 *            The maximum number of friends that each animal can lose (Note
+	 *            that animals can lose more than this number. See the note in
 	 *            the class description)
 	 * @param maxGainableFriends
 	 *            The maximum number of friends that each animal can gain (Note
@@ -64,8 +64,8 @@ public class ZooKeeper {
 	 * The constructor with a seed to the random generator
 	 *
 	 * @param maxLosableFriends
-	 *            The maximum number of friends that each animal can loose (Note
-	 *            that animals can loose more than this number. See the note in
+	 *            The maximum number of friends that each animal can lose (Note
+	 *            that animals can lose more than this number. See the note in
 	 *            the class description)
 	 * @param maxGainableFriends
 	 *            The maximum number of friends that each animal can gain (Note
@@ -111,8 +111,8 @@ public class ZooKeeper {
 
 	/**
 	 * @param maxLosableFriends
-	 *            The maximum number of friends that each animal can loose (Note
-	 *            that animals can loose more than this number. See the note in
+	 *            The maximum number of friends that each animal can lose (Note
+	 *            that animals can lose more than this number. See the note in
 	 *            the class description)
 	 *
 	 * @throws IllegalArgumentException
@@ -127,7 +127,7 @@ public class ZooKeeper {
 	/**
 	 * Simulates one day in the zoo, establishing and breaking up friendships
 	 * randomly within the constraints of the supplied policy which determines
-	 * the maximum number of friends that each animal can gain or loose per
+	 * the maximum number of friends that each animal can gain or lose per
 	 * round
 	 *
 	 * @param zoo
@@ -139,8 +139,8 @@ public class ZooKeeper {
 
 		Set<Animal> zooAnimalsSet = zoo.getAnimalsSet();
 		for (Animal currAnimal : zooAnimalsSet) {
-			// Loose a random friend and update the new friends' list
-			looseRandomFriend(zoo, currAnimal, this.maxLosableFriends);
+			// lose a random friend and update the new friends' list
+			loseRandomFriend(zoo, currAnimal, this.maxLosableFriends);
 			// Gain a random friend and update the new friends' list
 			gainRandomFriend(zoo, currAnimal, this.maxGainableFriends);
 		}
@@ -160,14 +160,14 @@ public class ZooKeeper {
 		while (!gainableFriendsSet.isEmpty() && (i < maxGainable)) {
 			Animal friendToGain = pickRandomFromAnimalSet(gainableFriendsSet);
 			zoo.addFirendship(anim, friendToGain);
-			gainableFriendsSet.remove(gainableFriendsSet);
+			gainableFriendsSet.remove(friendToGain);
 			i++;
 		}
 	}
 
-	private void looseRandomFriend(Zoo zoo, Animal anim, int maxLosable) {
+	private void loseRandomFriend(Zoo zoo, Animal anim, int maxLosable) {
 		/*
-		 * For the current animal get the set of loosable friends, which is
+		 * For the current animal get the set of losable friends, which is
 		 * equal to the set of all the animal's current friends
 		 */
 		Set<Animal> losableFriendsSet = zoo.getAnimalFirends(anim);
@@ -176,7 +176,7 @@ public class ZooKeeper {
 		while (!losableFriendsSet.isEmpty() && (i < maxLosable)) {
 			Animal friendToLose = pickRandomFromAnimalSet(losableFriendsSet);
 			zoo.removeFirendship(anim, friendToLose);
-			losableFriendsSet.remove(losableFriendsSet);
+			losableFriendsSet.remove(friendToLose);
 			i++;
 		}
 	}
